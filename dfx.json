@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "ICP_hackathon_backend": {
+      "candid": "src/ICP_hackathon_backend/ICP_hackathon_backend.did",
+      "package": "ICP_hackathon_backend",
+      "type": "rust"
+    },
+    "ICP_hackathon_frontend": {
+      "dependencies": [
+        "ICP_hackathon_backend"
+      ],
+      "source": [
+        "src/ICP_hackathon_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "ICP_hackathon_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
