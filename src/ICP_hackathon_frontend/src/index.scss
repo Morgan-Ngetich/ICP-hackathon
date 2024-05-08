@@ -444,3 +444,57 @@ nav {
     display: none;
   }
 }
+
+
+// Form registration:
+/* Custom styles for the form */
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.form-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.form-control {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.form-control:focus {
+  border-color: #f57c00; /* Orange color when input is focused */
+}
+
+.form-select {
+  width: 100%;
+  padding: 6px 12px;
+}
+
+.form-submit {
+  background-color: #f57c00; /* Orange background color for submit button */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.form-submit:hover {
+  background-color: #e65100; /* Darker orange color on hover */
+}
