@@ -3,12 +3,8 @@ use qrcode::QrCode;
 use qrcode::render::svg;
 use ic_cdk_macros::*;
 use ic_cdk::export::candid::{CandidType, Deserialize};
-use ic_cdk::storage::stable_save;
-use ic_cdk::Principal;
-use std::collections::BTreeMap;
 use std::sync::{Arc, Mutex};
 use std::thread;
-use firebase_admin::{credentials::Credentials, error::FirebaseError, initialize, storage::FirebaseStorage};
 use lazy_static::lazy_static;
 
 // Hardcoded list of allowed principals (users)
@@ -57,28 +53,7 @@ fn generate_qr_code(ticket_id: u32) -> Result<String, qrcode::types::QrError> {
 }
 
 lazy_static! {
-    static ref STORAGE: Arc<Mutex<Option<FirebaseStorage>>> = Arc::new(Mutex::new(None));
-}
-
-fn initialize_firebase() -> Result<(), FirebaseError> {
-    let credentials = Credentials::from_values(
-      Some("AIzaSyBUQ7BVNtWskvh7XiPLNTineh9d_scMssE"),
-      Some("744462707174"),
-      Some("icp-imagestorage.firebaseapp.com"),
-      Some("icp-imagestorage"),
-      Some("AIzaSyBUQ7BVNtWskvh7XiPLNTineh9d_scMssE"),
-      None,
-    );
-
-    initialize(credentials)?;
-    initialize_storage()?;
-    Ok(())
-}
-
-fn initialize_storage() -> Result<(), FirebaseError> {
-    let storage = FirebaseStorage::new()?;
-    *STORAGE.lock().unwrap() = Some(storage);
-    Ok(())
+    static ref IMAGE_URLS: Arc<Mutex<Vec<String>>> = Arc::new(Mutex::new(Vec::new()));
 }
 
 #[update]
@@ -138,75 +113,6 @@ fn get_ticket(ticket_id: u32) -> Ticket {
     }
 }
 
-struct Event {
-    id: u32,
-    name: String,
-    date: String,
-    location: String,
-    image_url: String,
-    ticket_types: Vec<TicketType>,
-}
-
-struct TicketType {
-    name: String,
-    price: u32,
-    quantity: u32,
-}
-
-#[update]
-fn add_event(name: String, date: String, location: String, image: Vec<u8>, ticket_types: Vec<TicketType>) {
-    let event_id = state.events.len() as u32;
-    let image_url = upload_image_to_firebase_storage(&image, event_id).unwrap_or_else(|err| {
-        ic_cdk::trap(&format!("Failed to upload image: {}", err));
-    });
-
-    let event = Event {
-        id: event_id,
-        name,
-        date,
-        location,
-        image_url,
-        ticket_types,
-    };
-    state.events.push(event);
-}
-
-#[update]
-fn update_event(event_id: u32, name: String, date: String, location: String, image: Vec<u8>, ticket_types: Vec<TicketType>) {
-    match state.events.iter_mut().find(|event| event.id == event_id) {
-        Some(event) => {
-            event.name = name;
-            event.date = date;
-            event.location = location;
-            event.image_url = upload_image_to_firebase_storage(&image, event_id).unwrap_or_else(|err| {
-                ic_cdk::trap(&format!("Failed to upload image: {}", err));
-            });
-            event.ticket_types = ticket_types;
-        }
-        None => ic_cdk::trap("Event not found"),
-    }
-}
-
-fn upload_image_to_firebase_storage(image: &[u8], event_id: u32) -> Result<String, FirebaseError> {
-    let storage_arc = Arc::clone(&STORAGE);
-
-    thread::spawn(move || {
-        let mut storage = storage_arc.lock().unwrap();
-        let storage = storage.as_mut().unwrap();
-
-        let bucket_name = "your_bucket_name";
-        let file_name = format!("images/event_{}.jpg", event_id);
-
-        let file = storage.bucket(bucket_name)?.file(&file_name);
-        file.upload_from_memory(image)?;
-
-        let public_url = file.public_url().to_string();
-        println!("Image uploaded successfully. Public URL: {}", public_url);
-    });
-
-    Ok("".to_string())
-}
-
 #[derive(Default)]
 struct FeedbackState {
     feedbacks: BTreeMap<u64, Feedback>,
@@ -236,14 +142,14 @@ fn submit_feedback(feedback: Feedback) {
     set_state(state);
 }
 
-fn is_authenticated(caller: &Principal) -> bool {
+fn is_authenticated(caller: &ic_cdk::Principal) -> bool {
     let caller_str = caller.to_string();
     ALLOWED_PRINCIPALS.iter().any(|&p| p == caller_str)
 }
 
 fn set_state(state: FeedbackState) {
     let bytes = serde_cbor::to_vec(&state).expect("Failed to serialize state");
-    stable_save("state", &bytes).expect("Failed to save state");
+    ic_cdk::storage::stable_save("state", &bytes).expect("Failed to save state");
 }
 
 fn main() {

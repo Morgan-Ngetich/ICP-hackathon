@@ -16,5 +16,4 @@ qrcode = "0.13.0"
 image = "0.23.14"
 qrcode-rust = "0.6.0"
 firebase_admin = "0.16.1"
-firebase-admin-sdk = "0.8.0"
 tokio = { version = "1", features = ["full"] }
