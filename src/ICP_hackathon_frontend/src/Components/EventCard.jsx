@@ -63,7 +63,8 @@ const EventCard = ({ event }) => {
       <Col sm={12} md={6} lg={4}>
         <Card
             style={{
-                width: '18rem',
+                maxWidth: '18rem',
+                // maxHeight: '1000px',
                 border: '1px solid black',
                 boxShadow: '2px 2px 2px black',
                 borderRadius: '5px',
@@ -75,7 +76,7 @@ const EventCard = ({ event }) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <Card.Img variant="top" src={event.image} style={{ width: '100%' }} />
+            <Card.Img variant="top" src={event.image} style={{ width: "100%", height: '400px'}} />
             <Card.Body>
                 <Card.Title style={{ color: '#333', fontSize: '1.7rem', marginBottom: '10px', textAlign: 'center' }}>
                     {event.eventName}
