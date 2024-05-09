@@ -32,7 +32,7 @@ To use the Decentralized Ticket Reservation System, users can visit the web inte
 - Git Flow for version control
 
 ## Authors
-- [Your Name](https://github.com/yourusername) - [Your Website](https://www.yourwebsite.com)
+- [Morgan Ngetich](https://github.com/Morgan-Ngetich) - [Website](https://www.yourwebsite.com)
 
 ## License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
