@@ -15,5 +15,4 @@ ic-cdk-timers = "0.6" # Feel free to remove this dependency if you don't need ti
 qrcode = "0.13.0"
 image = "0.23.14"
 qrcode-rust = "0.6.0"
-firebase_admin = "0.16.1"
 tokio = { version = "1", features = ["full"] }

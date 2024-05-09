@@ -9,42 +9,42 @@ const eventData = [
         date: 'January 1, 2025',
         time: '10:00 AM - 5:00 PM',
         location: 'Event Venue',
-        image: 'https://via.placeholder.com/150'
+        image: 'https://i.pinimg.com/564x/63/36/bc/6336bc595df6201d058e89f2ae744221.jpg'
     },
     {
         eventName: 'Festival of Colors',
         date: 'February 15, 2025',
         time: '12:00 PM - 8:00 PM',
         location: 'City Park',
-        image: 'https://via.placeholder.com/150'
+        image: 'https://i.pinimg.com/564x/f9/7d/0b/f97d0bd5cb4e3087f52506fc9de84591.jpg'
     },
     {
         eventName: 'Tech Summit',
         date: 'March 10, 2025',
         time: '9:00 AM - 6:00 PM',
         location: 'Convention Center',
-        image: 'https://via.placeholder.com/150'
+        image: 'https://i.pinimg.com/564x/03/90/58/039058697bcd886ef627857c23511bf4.jpg'
     },
     {
       eventName: 'Tech Summit',
       date: 'March 10, 2025',
       time: '9:00 AM - 6:00 PM',
       location: 'Convention Center',
-      image: 'https://via.placeholder.com/150'
+      image: 'https://i.pinimg.com/236x/d4/ad/4e/d4ad4e1445928686ce5a8e5e203da67a.jpg'
   },
   {
     eventName: 'Tech Summit',
     date: 'March 10, 2025',
     time: '9:00 AM - 6:00 PM',
     location: 'Convention Center',
-    image: 'https://via.placeholder.com/150'
+    image: 'https://i.pinimg.com/236x/e7/84/c5/e784c5669cfa7fd9e5c56b6fff5cc3a4.jpg'
 },
 {
   eventName: 'Tech Summit',
   date: 'March 10, 2025',
   time: '9:00 AM - 6:00 PM',
   location: 'Convention Center',
-  image: 'https://via.placeholder.com/150'
+  image: 'https://i.pinimg.com/236x/1f/0b/55/1f0b55433f4ba43d4202c1005c27a47b.jpg'
 }
   
 ];
